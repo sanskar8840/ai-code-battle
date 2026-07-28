@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper-50 text-ink-900 font-body antialiased transition-colors duration-200;
+  }
+
+  html.dark body {
+    @apply bg-ink-900 text-paper-100;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+
+  /* Visible keyboard focus everywhere, never suppressed */
+  :focus-visible {
+    @apply outline-none ring-2 ring-duel-500 ring-offset-2 ring-offset-paper-50;
+  }
+  html.dark :focus-visible {
+    @apply ring-offset-ink-900;
+  }
+
+  ::selection {
+    @apply bg-duel-500/30;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-duel-500 px-5 py-2.5
+      font-body font-semibold text-white shadow-glow transition-all duration-150
+      hover:bg-duel-600 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-ink-600/30 dark:border-paper-200/20
+      bg-transparent px-5 py-2.5 font-body font-semibold text-ink-900 dark:text-paper-100
+      transition-all duration-150 hover:bg-ink-900/5 dark:hover:bg-paper-100/5 active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-ink-600/20 dark:border-paper-200/15 bg-white dark:bg-ink-800
+      px-4 py-2.5 font-body text-sm text-ink-900 dark:text-paper-100 placeholder:text-ink-600/50
+      transition-colors duration-150 focus:border-duel-500;
+  }
+
+  .card {
+    @apply rounded-xl border border-ink-600/10 dark:border-paper-200/10 bg-white dark:bg-ink-800 shadow-sm;
+  }
+
+  .label-text {
+    @apply mb-1.5 block font-body text-sm font-medium text-ink-800 dark:text-paper-200;
+  }
+
+  .error-text {
+    @apply mt-1 font-body text-xs text-fail;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
