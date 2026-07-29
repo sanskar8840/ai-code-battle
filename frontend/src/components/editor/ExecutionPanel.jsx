@@ -26,6 +26,7 @@ const [loadingOptimization, setLoadingOptimization] = useState(false);
   const canExecute = editorState?.code?.trim().length > 0;
 
   const handleRun = async () => {
+     console.log("RUN BUTTON CLICKED");
     if (!canExecute) {
       toast.error("Write some code first");
       return;
