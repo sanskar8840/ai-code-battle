@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import RecommendationCard from "./RecommendationCard";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
 
 const RecommendationSection = () => {
@@ -14,18 +15,14 @@ useEffect(() => {
       const token = localStorage.getItem("token");
 
 const res = await axios.get(
-  "http://localhost:5000/api/recommendations",
+  `${API}/recommendations`,
   {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
 );
-console.log("Response:", res);
-console.log("Data:", res.data);
-console.log("Recommendations:", res.data.recommendations);
 
-console.log(JSON.stringify(recommendations[0], null, 2));
 
       setRecommendations(res.data.recommendations);
     } catch (err) {

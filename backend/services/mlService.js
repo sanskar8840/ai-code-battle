@@ -4,10 +4,10 @@ const path = require("path");
 const getMLRecommendations = (userData = {}) => {
   return new Promise((resolve, reject) => {
 
-    const pythonPath = path.join(
-      __dirname,
-      "../../ml/venv/Scripts/python.exe"
-    );
+    const pythonPath =
+      process.platform === "win32"
+      ? path.join(__dirname, "../../ml/venv/Scripts/python.exe")
+      : path.join(__dirname, "../../ml/venv/bin/python");
 
     const scriptPath = path.join(
       __dirname,

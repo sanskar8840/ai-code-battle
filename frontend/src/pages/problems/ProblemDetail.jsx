@@ -14,6 +14,7 @@ import EmptyState from "../../components/common/EmptyState";
 import { ProblemDetailSkeleton } from "../../components/common/Skeleton";
 import CodeEditor from "../../components/editor/CodeEditor";
 import ExecutionPanel from "../../components/editor/ExecutionPanel";
+const API = import.meta.env.VITE_API_URL;
 
 const ProblemDetail = () => {
   const { slug } = useParams();
@@ -81,7 +82,7 @@ const [loadingBugs, setLoadingBugs] = useState(false);
   try {
     setLoadingHint(true);
 
-    const res = await axios.post("http://localhost:5000/api/ai/hint", {
+    const res = await axios.post(`${API}/ai/hint`, {
       problemTitle: problem.title,
       problemDescription: problem.description,
     });
@@ -100,8 +101,7 @@ const generateTestCases = async () => {
   try {
     setLoadingTestCases(true);
 
-    const res = await axios.post(
-      "http://localhost:5000/api/ai/testcases",
+    const res =await axios.post(`${API}/ai/testcases`,
       {
         problemTitle: problem.title,
         problemDescription: problem.description,
@@ -124,8 +124,7 @@ const findBugs = async () => {
   try {
     setLoadingBugs(true);
 
-    const res = await axios.post(
-      "http://localhost:5000/api/ai/bugfinder",
+    const res = await axios.post(`${API}/ai/bugfinder`,
       {
         problemTitle: problem.title,
         problemDescription: problem.description,
@@ -149,8 +148,7 @@ const getDryRun = async () => {
   try {
     setLoadingDryRun(true);
 
-    const res = await axios.post(
-      "http://localhost:5000/api/ai/dryrun",
+    const res = await axios.post(`${API}/ai/dryrun`,
       {
         problemTitle: problem.title,
         problemDescription: problem.description,
@@ -173,8 +171,7 @@ const analyzeComplexity = async () => {
   try {
     setLoadingComplexity(true);
 
-    const res = await axios.post(
-      "http://localhost:5000/api/ai/complexity",
+    const res = await axios.post(`${API}/ai/complexity`,
       {
         language: editorState?.language,
         userCode: editorState?.code,

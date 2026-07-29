@@ -8,6 +8,7 @@ import TestCaseResults from "./TestCaseResults";
 import executionService from "../../services/executionService";
 import AchievementPopup from "../achievements/AchievementPopup";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 /**
  * `editorState` = { language, code } — the latest value from CodeEditor's onStateChange.
  * Kept separate from CodeEditor itself so this same panel can be reused for
@@ -116,7 +117,7 @@ const [loadingOptimization, setLoadingOptimization] = useState(false);
     setLoadingExplanation(true);
 
     const res = await axios.post(
-      "http://localhost:5000/api/ai/explain",
+      `${API}/ai/explain`,
       {
         problemTitle: problem.title,
         problemDescription: problem.description,
@@ -140,7 +141,7 @@ const optimizeCode = async () => {
     setLoadingOptimization(true);
 
     const res = await axios.post(
-      "http://localhost:5000/api/ai/optimize",
+      `${API}/ai/optimize`,
       {
         problemTitle: problem.title,
         problemDescription: problem.description,
