@@ -21,22 +21,25 @@ const battleRoutes = require("./routes/battleRoutes");
 const achievementRoutes = require("./routes/achievementRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const recommendationRoutes = require("./routes/recommendationRoutes");
-const connectDB = require("./config/db");
-const Problem = require("./models/Problem");
-const User = require("./models/User");
-const PROBLEMS = require("./seed/problems");
 
 const app = express();
 
-// Security & parsing middleware
-app.use(helmet());
+// IMPORTANT
+app.set("trust proxy", 1);
 
+// CORS
 app.use(
   cors({
-    origin: config.clientUrl,
+    origin: [
+      "http://localhost:5173",
+      "https://ai-code-battle.vercel.app",
+    ],
     credentials: true,
   })
 );
+
+// Security
+app.use(helmet());
 
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
@@ -50,33 +53,22 @@ if (config.env === "development") {
 
 app.use("/api", apiLimiter);
 
-// =========================
-// ROOT ROUTE
-// =========================
+// Root
 app.get("/", (req, res) => {
-  res.status(200).json({
+  res.json({
     success: true,
     message: "🚀 AI Code Battle Arena Backend is Live!",
-    version: "1.0.0",
-    health: "/api/health",
   });
 });
 
-// =========================
-// HEALTH CHECK
-// =========================
+// Health
 app.get("/api/health", (req, res) => {
-  res.status(200).json({
+  res.json({
     success: true,
-    message: "AI Code Battle Arena API is running",
   });
 });
 
-
-
-// =========================
-// API ROUTES
-// =========================
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/dashboard", dashboardRoutes);
@@ -86,15 +78,10 @@ app.use("/api/execute", executionRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/battles", battleRoutes);
 app.use("/api/achievements", achievementRoutes);
-
-console.log("AI routes loaded");
-
 app.use("/api/ai", aiRoutes);
 app.use("/api/recommendations", recommendationRoutes);
 
-// =========================
-// ERROR HANDLING
-// =========================
+// Errors
 app.use(notFound);
 app.use(errorHandler);
 
