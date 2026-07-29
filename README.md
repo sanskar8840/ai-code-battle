@@ -4,6 +4,22 @@ An AI-powered competitive coding platform where users can solve coding problems,
 
 ---
 
+
+# ⚔️ AI Code Battle Arena
+
+An AI-powered competitive coding platform where users can solve coding problems, participate in real-time 1v1 battles, and receive AI-powered code reviews.
+
+## 🌐 Live Demo
+
+**Frontend:** https://ai-code-battle.vercel.app
+
+**Backend API:** https://ai-code-battle.onrender.com
+
+---
+
+## 🚀 Features
+...
+
 ## 🚀 Features
 
 ### 👨‍💻 Coding Platform
