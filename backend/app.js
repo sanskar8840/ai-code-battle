@@ -72,45 +72,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-app.get("/api/seed", async (req, res) => {
-  try {
-    await connectDB();
 
-    await Problem.deleteMany({});
-
-    let admin = await User.findOne({
-      email: "Sanskaryadav578@gmail.com",
-    });
-
-    if (!admin) {
-      admin = await User.create({
-        name: "Seed Admin",
-        username: "seed_admin",
-        email: "Sanskaryadav578@gmail.com",
-        password: "ChangeMe123!",
-        role: "admin",
-      });
-    }
-
-    const docs = PROBLEMS.map((p) => ({
-      ...p,
-      createdBy: admin._id,
-    }));
-
-    await Problem.insertMany(docs);
-
-    res.json({
-      success: true,
-      inserted: docs.length,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      success: false,
-      error: err.message,
-    });
-  }
-});
 
 // =========================
 // API ROUTES
