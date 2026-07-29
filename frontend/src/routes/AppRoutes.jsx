@@ -23,7 +23,7 @@ import Matchmaking from "../pages/battles/Matchmaking";
 import BattleRoom from "../pages/battles/BattleRoom";
 import BattleResult from "../pages/battles/BattleResult";
 import BattleHistory from "../pages/battles/BattleHistory";
-import Leaderboard from "../pages/leaderboard";
+import Leaderboard from "../pages/Leaderboard";
 import Achievements from "../pages/Achievements";
 
 export const router = createBrowserRouter([
