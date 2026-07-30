@@ -36,6 +36,8 @@ const validateLanguageSupported = (problem, language) => {
 // @route   POST /api/execute/run
 // @access  Private
 const runCode = asyncHandler(async (req, res) => {
+  console.log("RUN REQUEST BODY:", req.body);
+  
   const { problemId, language, code } = req.body;
 
   if (!problemId || !language || typeof code !== "string" || !code.trim()) {
@@ -87,6 +89,7 @@ console.log("Overall Status:", overallStatus);
 // @route   POST /api/execute/submit
 // @access  Private
 const submitCode = asyncHandler(async (req, res) => {
+    console.log("SUBMIT REQUEST BODY:", req.body);
   const { problemId, language, code } = req.body;
 
   if (!problemId || !language || typeof code !== "string" || !code.trim()) {
