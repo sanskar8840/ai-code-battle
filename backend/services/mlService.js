@@ -6,60 +6,52 @@ const getMLRecommendations = (userData = {}) => {
 
     const pythonPath =
       process.platform === "win32"
-      ? path.join(__dirname, "../../ml/venv/Scripts/python.exe")
-      : path.join(__dirname, "../../ml/venv/bin/python");
+        ? path.join(__dirname, "../venv/Scripts/python.exe")
+        : path.join(__dirname, "../venv/bin/python");
 
     const scriptPath = path.join(
       __dirname,
-      "../../ml/recommend.py"
+      "../ml/recommend.py"
     );
 
     console.log("Python Path:", pythonPath);
     console.log("Script Path:", scriptPath);
 
-    // User data -> JSON
-    const jsonInput = JSON.stringify(userData);
-
-    // Python call with JSON argument
-    const python = spawn(
-      pythonPath,
-      [
-        scriptPath,
-        jsonInput
-      ]
-    );
+    const python = spawn(pythonPath, [
+      scriptPath,
+      JSON.stringify(userData),
+    ]);
 
     let data = "";
     let error = "";
 
     python.stdout.on("data", (chunk) => {
-      console.log("STDOUT:", chunk.toString());
       data += chunk.toString();
     });
 
     python.stderr.on("data", (chunk) => {
-      console.log("STDERR:", chunk.toString());
       error += chunk.toString();
     });
 
-    python.on("close", (code) => {
+    python.on("error", (err) => {
+      console.error("Spawn Error:", err);
+      reject(err);
+    });
 
+    python.on("close", (code) => {
       console.log("Exit Code:", code);
 
       if (code !== 0) {
+        console.error(error);
         return reject(error);
       }
 
       try {
-        const json = JSON.parse(data.trim());
-        resolve(json);
+        resolve(JSON.parse(data));
       } catch (err) {
-        console.error("JSON Parse Error:", err);
         reject(err);
       }
-
     });
-
   });
 };
 
